@@ -10,11 +10,11 @@ Tout est gratuit.
 
 ## Structure du dépôt
 
-1. **1-Archive** : Historique et anciennes versions des documents.
-2. **2-Data** : Données sources et fichiers bruts (CSV, Excel, etc.).
-3. **3-Analyse** : Rapports, schémas techniques et audits.
-4. **4-Strategie** : Notes de réflexion, mindmaps et planification.
-5. **5-Action** : Scénarios n8n, prompts et ressources opérationnelles.
+1. **0-Archive** : Historique et anciennes versions des documents.
+2. **1-Donnee_Brute** : Données sources et fichiers bruts (CSV, Excel, etc.).
+3. **2-Analyse** : Rapports, schémas techniques et audits.
+4. **3-Strategie** : Notes de réflexion, mindmaps et planification.
+5. **4-Action** : Scénarios n8n, prompts et ressources opérationnelles.
 
 ---
 
