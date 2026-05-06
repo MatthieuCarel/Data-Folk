@@ -1,0 +1,23 @@
+"Segment","Population","Temps de surf / jour","Poids numérique (>15ans)*","Part du mobile","Usage Social**","Usage Médias**","Usage Services**","Adoption IA","Top 5 réseaux sociaux***"
+"15-24 ans","7,86 M (11,8%)","4h53 +","20,50 %","91% =","61% +","27% –","12% =","78% +","IG (76%), SC(77%), WA(50%), FB(47%), TK(46%)"
+"25-49 ans","20,11 M (30,2%)","3h38 +","39,10 %","85% +","39% +","31% ex","24% ex","58% +","FB(66%), WA(59%), IG (50%), MS(43%), SC(40%)"
+"50-64 ans","12,85 M (19,3%)","3h16 +","22,50 %","73% +","30% =","35% ex","30% ex","40% +","FB(62%), WA(56%), IG(36%), MS(33%), SC(26%)"
+"65 ans et +","14,79 M (22,2%)","2h16 +","17,90 %","63% +","23% +","41% ex","35% ex","24% +","FB(48%), WA(48%),
+IG( 21%), MS(19%), SC (7%)"
+">15ans","55,61 M (83.5%)","3h21 +","100,00 %","78% +","38% =","33% –","24% =","44% +","FB (50%),WA(49%), IG(38%), SC(31%), MS(29%)"
+,,,,,,,,,
+"Notes :",,,,,,,,,
+"Les tendances 2025 sont représentées par les signes : +, -, ou =",,,,,,,,,
+,,,,,,,,,
+"* Poids numérique = Indice poids numérique /Total poids numérique × 100",,,,,,,,,
+"Indice poids numérique = Population (M) × Temps de surf (min/jour)",,,,,,,,,
+"Total poids numérique = 11 217",,,,,,,,,
+"EX : 15-24 ans : 7,86 × 293 = 2 303 → 2303/11217 × 100 = 20,5%",,,,,,,,,
+,,,,,,,,,
+"** « ex » = extrapolation. Données agrégées issues de l’INSEE, Médiamétrie, et We Are Social, par triangulation IA (Gemini, Perplexity, Claude) pour les 15-24ans et la moyenne française.",,,,,,,,,
+"Usage Social = Réseaux & messageries, email…",,,,,,,,,
+"Usage Médias = Jeux en ligne, Vidéos, Cinéma, Musique, Médias TV & Radio, Actualités…",,,,,,,,,
+"Usage Services = Portails généralistes, Plans, Sites marchands généralistes…",,,,,,,,,
+,,,,,,,,,
+"*** Hors Google (Search & Youtube). FB = Facebook ; WA = WhatsApp ; IG = Instagram ; SC = Snapchat ; MS = Messenger ; TK = TikTok",,,,,,,,,
+"P.S. Les GAFAM, ByteDance, et SnapInc captent près de 60% de l’attention des français (et jusqu’à 73% chez 15-24ans).",,,,,,,,,
