@@ -1,6 +1,6 @@
 # 
 
-# Segmentation des Chaînes YouTube "vélo" (Clustering)
+# Clusterisation des Chaînes YouTube FR "vélo"
 
 
 
