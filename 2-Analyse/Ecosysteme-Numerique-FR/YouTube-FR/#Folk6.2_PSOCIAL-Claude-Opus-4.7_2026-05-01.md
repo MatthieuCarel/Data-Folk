@@ -86,7 +86,7 @@
 
 ### **P5B2 Besoins \& Tendances**
 
-1. ### **P5B-2.1. Ce que les cyclistes cherchent**
+### **P5B-2.1. Ce que les cyclistes cherchent**
 
    **Besoins bien couverts (≥3 chaînes) :**
 
@@ -138,7 +138,7 @@
 - **Muc Off / MucOff** — citée dans 2 chaînes — "Muc Off (2 auteurs)" — Folk_Bikelive ; "MucOff (3 auteurs)" — Folk_Vélo_Tout_Tordu Présent dans : Bikelive, Vélo Tout Tordu
 - **Tubeless** (terme générique) — cité dans 2 chaînes — "Tubeless (5 auteurs)" — Folk_Bistrot_Gravier ; "Tubeless (2 auteurs)" — Folk_Guillaume_fait_du_vélo Présent dans : Bistrot Gravier, Guillaume fait du vélo
 
-1. ### **P5B-2.2. Signaux thématiques 2022-2025**
+### **P5B-2.2. Signaux thématiques 2022-2025**
 
    Basé uniquement sur section 2A.3 des 25 PDATA. Ces signaux reflètent l'évolution des catalogues — pas des commentaires.
 
@@ -186,12 +186,14 @@
 - **Levée de roue à grande vitesse / wheeling avancé** — "Comment ont fait pour lever a grande vitesse" — @x — Folk_Patrox_Bikelife
 - **Apprentissage du wheeling après accident** — "Sa me soule j'ai fait un troma et ducoup j'arrive plus a leve 😢" — @x_by_tim — Folk_Patrox_Bikelife
 - **Évaluation team Decathlon AG2R** — "Que pensez vous de l'évolution du team Decathlon Ag2r depuis 3 ans?" — @x_velo — Folk_La_Pause_Vélo
-  1. ## **P5B-3. Synthèse \& insights**
+
+## **P5B-3. Synthèse \& insights**
 
      Basé uniquement sur les résultats produits en P5B-1 et P5B-2.
-     1. ### **P5B-3.1. Tensions dans l'écosystème**
+  
+  ### **P5B-3.1. Tensions dans l'écosystème**
 
-        **Tension 1 — Marketing vs critique honnête**
+  **Tension 1 — Marketing vs critique honnête**
 
 - Ce que P5B-1 et P5B-2 montrent : P5B-2 documente une frustration récurrente sur les "publi-reportages" et l'absence d'aspects négatifs ("Belle lecture de la fiche technique et du verbatim marketing fournis par Canyon. J'aurai aimé une vraie critique du vélo avec aussi les aspects négatifs"), tandis que P5B-1 décrit le Profil 8 (low-tech/durabilité) qui rejette explicitement le marketing comme principal moteur de défiance.
 - Chaînes où elle est visible : Bikelive, Le Vélo Urbain, L'expert vélo, La Pause Vélo (frustration côté P5B-2) ; Bibibike, The Vintage Bike Factory, Voies Recyclables, Vintage Queen Bike Repair (point d'ancrage anti-marketing côté P5B-1).
@@ -216,7 +218,7 @@
 - Ce que P5B-1 et P5B-2 montrent : P5B-2 isole une frustration spécifique sur le bridage 25 km/h ("Le bridage stupide à 25 km/h fait que ce vélo n'a d'intérêt qu'en montagne") et P5B-1 décrit le Profil 5 (utilisateur urbain/électrique) dont la relation au vélo est utilitaire et quotidienne, ce qui fait du bridage un point de friction structurel entre la réglementation et l'usage réel.
 - Chaînes où elle est visible : L'expert vélo, Transition Vélo, Le Vélo Urbain.
 
-1. ### **P5B-3.2. Déséquilibres structurels**
+### **P5B-3.2. Déséquilibres structurels**
 
    **Déséquilibre 1 — Demande de critique honnête vs offre dominante de tests favorables**
 
