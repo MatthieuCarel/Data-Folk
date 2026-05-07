@@ -21,7 +21,7 @@ Sur la base des données collectées en avril 2026, l'échantillon des 62 chaîn
 |**D2**|Loisir \& Pratique|3|Sorties famille, conseils débutants, balades.|
 |**E**|Vintage|2|Restauration de vélos anciens, héritage.|
 |**F**|Gravel|3|Exploration mixte, épreuves ultra-distance.|
-|**G**|BMX \& Freestyle|4|Tricks, skatepark, bikelife urbaine.|
+|**G**|BMX \& Freestyle|4|Trial, Tricks, skatepark, bikelife urbaine.|
 |**H**|Actus \& Médias|6|Magazines, interviews, actualité pro.|
 
 
