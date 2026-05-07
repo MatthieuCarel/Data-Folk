@@ -128,7 +128,7 @@ Les commentaires montrent une audience très engagée sur la mécanique vélo, a
 - 3 preuves :
   "Bravo ! 1 bon point pour l'écologie, 1 autre pour l'économie, 1 troisième pour la débrouille et 1 grand pour l'aide apportée au client. Si j'habitais Toulouse, tu m'aurais très sûrement parmi ta clientèle" — Auteur : @x — Likes : 41
   "Très très belle démarche, je valide à 100 %" — Auteur : @x — Likes : 22
-  "Merci pour cette belle vision, et pas seulement du côté VTT. Je trouve aussi que, plus que les choix personnels des matériels, que les évolutions sur les cycles n'ont plus guère progressé." — Auteur : @x.olivier5259 — Likes : 5
+  "Merci pour cette belle vision, et pas seulement du côté VTT. Je trouve aussi que, plus que les choix personnels des matériels, que les évolutions sur les cycles n'ont plus guère progressé." — Auteur : @x — Likes : 5
 - Top 3 commentaires par likes :
   "Vous ne faites pas juste preuve d'une excellente philosophie mais de véritable résilience , l'avenir est tellement mal barré que ce vélo dit "de voyage" sera notre principal moyen de transport dans un futur très proche et le penser intelligemment avec une vraie optique low-tech et durable est très réaliste vu ce qui nous attend...beau travail !" — Auteur: @x — Likes: 63
   "Complètement d'accord, pour 95 % des gens qui font du vélo, un système à patin bien entretenu et réglé est largement suffisant." — Auteur: @x — Likes: 58
