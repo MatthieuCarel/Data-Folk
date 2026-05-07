@@ -1,4 +1,4 @@
-DISCLAIMER : Résultats produits par Claude Opus 4.7 à partir des données "PDATA" et de l'exécution sumultanée des 3 prompts suivants : "#P5A1_Notation comprative", "#P5A2_CSV & insights compratifs", "#P5A3_Portraits des tribus".
+DISCLAIMER : Résultats produits par Claude Opus 4.7 à partir des données "PDATA" et de l'exécution sumultanée des 3 prompts suivants : "#P5A1_Notation comprative", "#P5A2_CSV & insights comparatifs", "#P5A3_Portraits des tribus".
 ClaudeIA est une IA et peut faire des erreurs !
 
  # **P5A-1 — Notation comparative des 25 chaînes**
