@@ -1,0 +1,1279 @@
+{
+  "name": "Pipeline_Prompts",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        768
+      ],
+      "id": "b100754f-b57c-43b5-a29c-b0580f3e2f86",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4-NANO"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Tu es un analyste YouTube spécialisé vélo.\nTu rédiges uniquement ce qui t'est demandé.\nTu ne produis rien d'autre que les sections demandées.\nTu n'inventes rien. Cite uniquement des titres\nlittéralement présents dans les données fournies.\nAucun émoji. Aucune introduction. Aucune conclusion.\nCommence directement par \"# 2A. SUJETS & FORMATS\"."
+            },
+            {
+              "content": "={{ $json.p2a_data }}\n\n# 2A. SUJETS & FORMATS\n\n## 2A.1. Thèmes\n- Thème principal : [1 ligne — thème dominant par fréquence\n  dans l'ensemble des titres. Ne jamais mettre N/A si des\n  titres sont présents.]\n- Thèmes secondaires : [3 thèmes récurrents identifiés\n  dans les titres. Sinon \"N/A\".]\n- Mots-clés récurrents : [termes présents dans au moins\n  3 titres distincts. Exclure le nom de la chaîne.]\n\n## 2A.2. Formats\n- Formats identifiés sur les 15 vidéos analysées : [liste exhaustive\n  des termes littéraux de la section FORMATS avec leur fréquence]\n- Format dominant : [le plus représenté]\n\n## 2A.3. Évolution thématique 2022-2025\n[3 lignes denses. Cite uniquement des titres littéralement\nprésents dans les données fournies, avec leur année.\nFormat de citation : \"Titre\" (année)]"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1328,
+        -112
+      ],
+      "id": "df2ca326-48f2-46e3-a05d-7118f0ffde00",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "MC_OPEN_AI_KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "69a9c327-18f6-4508-b713-8628ad819669",
+              "name": "=SHEET_ID",
+              "value": "={{ $json.SHEET_ID }}",
+              "type": "string"
+            },
+            {
+              "id": "c78db6d8-67b1-491b-8960-9436fdc5eb30",
+              "name": "YT_CHAINE",
+              "value": "={{ $json.NOM }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        384
+      ],
+      "id": "fc6b9c96-0cba-46ad-bba9-88aa4d24aa9b",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "VOTRE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "NOM_DE_VOTRE_REGISTRE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/VOTRE_SHEET_ID/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "PIPELINE_LIST",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/VOTRE_SHEET_ID/edit"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Prompts_done",
+              "lookupValue": "false"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -16,
+        768
+      ],
+      "id": "752aeeca-fece-4d20-8b1a-b2c012e0aba2",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "SHEET_ID",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        208,
+        384
+      ],
+      "id": "fb99738d-f4a9-4767-ac82-f09d18707344",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=Infos",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        -464
+      ],
+      "id": "21b6a81d-6dca-468e-8bcb-b6c2b9917905",
+      "name": "INFOS",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=2022-2025",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        -32
+      ],
+      "id": "53a4ec43-2858-43b0-88ec-4558f121cf2f",
+      "name": "2022-2025",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=Top 300 commentaires",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        496
+      ],
+      "id": "7ce9722d-62c9-41c9-ac87-8024e26427c2",
+      "name": "Top 300 commentaires",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=Top 15 vidéos",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        304
+      ],
+      "id": "5f5395b3-1f7b-40e6-b62e-628b8bb578c5",
+      "name": "Top 15 vidéos",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=Transcription",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        688
+      ],
+      "id": "a3efab76-e99b-44e0-a218-3f5e8b3557b9",
+      "name": "Transcription",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=Analyse_GPT5.1",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        880
+      ],
+      "id": "7cb287dd-999e-4ade-8bda-6e5015598262",
+      "name": "Analyse_GPT5.1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4-NANO"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Tu es un analyste YouTube spécialisé vélo.\nTu rédiges uniquement ce qui t'est demandé.\nTu ne produis rien d'autre que les sections demandées.\nTu n'inventes rien. Aucun émoji. Aucune introduction.\nAucune conclusion. Commence directement par \"## 1.4.\""
+            },
+            {
+              "content": "={{ $json.data_for_gpt }}\n\n## 1.4. Analyse contextuelle du Top 15\n- Poids du Top 15 : [recopie exactement le calcul fourni dans les données]\n- Nature du Top 15 : [Paragraphe de 3 lignes max.\n  De quoi parlent majoritairement ces vidéos ?\n  Sont-elles cohérentes avec le reste de la chaîne\n  ou des anomalies thématiques ou temporelles ?\n  Ne pas répéter le label \"Nature du Top 15\"\n  plusieurs fois.]\n\n## 1.5. Synthèse performances\n[5 lignes max. Lecture transversale des tableaux 1.1 à 1.4.\nNote : les vues totales favorisent mécaniquement les années\nles plus anciennes par effet de cumul — nuance si les données\nle justifient. Aucun émoji.]"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 1000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1680,
+        -320
+      ],
+      "id": "c9e8c0f0-7759-4402-9343-cbc81a60be66",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "MC_OPEN_AI_KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "167b3b62-49e7-4468-b1e5-27f9962c3e06",
+              "name": "blocs_code",
+              "value": "={{ $json.blocs_code }}",
+              "type": "string"
+            },
+            {
+              "id": "26ea4b3a-8cd4-4f6e-a354-9e65333be903",
+              "name": "data_for_gpt",
+              "value": "={{ $json.data_for_gpt }}",
+              "type": "string"
+            },
+            {
+              "id": "b5d9182c-08c3-4a74-b5fb-24de99241d58",
+              "name": "chaine",
+              "value": "={{ $json.chaine }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1392,
+        -320
+      ],
+      "id": "7583a19c-eb10-4969-9f97-3754901c63c0",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        880,
+        16
+      ],
+      "id": "03954ad9-42a8-4f6c-9380-71c9cd809aaa",
+      "name": "P2"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        880,
+        -336
+      ],
+      "id": "96e7ae9d-b2a3-4148-a195-f2621c95b1f7",
+      "name": "P1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// =====================\n// RÉCUPÉRATION DES DONNÉES\n// =====================\nconst perfAll = $('2022-2025').all();\nconst gptAll = $('Analyse_GPT5.1').all();\n\n// Lignes 7+ = vidéos individuelles (index 5+)\nconst videos = perfAll.slice(5);\n\n// =====================\n// NETTOYAGE\n// =====================\nfunction cleanStr(s) {\n  if (!s) return 'N/A';\n  return String(s)\n    .replace(/&amp;/g, '&')\n    .replace(/&#39;/g, \"'\")\n    .replace(/&quot;/g, '\"')\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/\\n/g, ' ')\n    .trim();\n}\n\n// =====================\n// 2A.1 — TITRES PAR ANNÉE\n// =====================\nconst videosByYear = {};\nvideos.forEach(row => {\n  const r = row.json;\n  const date = cleanStr(r['Date']);\n  const titre = cleanStr(r['Titre']);\n  if (!titre || titre === 'N/A') return;\n  \n  // Extraire l'année\n  let year = 'Inconnue';\n  if (date && date.length >= 4) {\n    year = date.substring(0, 4);\n  }\n  \n  if (!videosByYear[year]) videosByYear[year] = [];\n  videosByYear[year].push(titre);\n});\n\n// Trier les années décroissantes\nconst yearsSorted = Object.keys(videosByYear).sort((a, b) => b - a);\n\nconst titresParAnnee = yearsSorted.map(year => {\n  const titres = videosByYear[year].map(t => `  - ${t}`).join('\\n');\n  return `${year} (${videosByYear[year].length} vidéos) :\\n${titres}`;\n}).join('\\n\\n');\n\nconst bloc2A1 = `=== TITRES PAR ANNÉE (lignes 7+) ===\n${titresParAnnee}`;\n\n// =====================\n// 2A.2 — FORMATS ANALYSEGPT\n// =====================\nconst formats = {};\ngptAll.forEach(row => {\n  const f = cleanStr(row.json['Format']);\n  if (f && f !== 'N/A') {\n    formats[f] = (formats[f] || 0) + 1;\n  }\n});\n\nconst formatsList = Object.entries(formats)\n  .sort((a, b) => b[1] - a[1])\n  .map(([f, count]) => `- ${f} : ${count}`)\n  .join('\\n');\n\nconst bloc2A2 = `=== FORMATS (AnalyseGPT — 15 vidéos) ===\n${formatsList}`;\n\n// =====================\n// OUTPUT FINAL\n// =====================\n// Récupérer le nom de la chaîne depuis 2022-2025\nconst chaine = cleanStr(perfAll[0].json['Nom de la chaîne']);\n\nreturn [{ json: {\n  p2a_data: `${bloc2A1}\\n\\n${bloc2A2}`,\n  chaine: chaine\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        -112
+      ],
+      "id": "01db5da4-3570-4fbd-998f-3ed9329c7364",
+      "name": "P2A_DATA"
+    },
+    {
+      "parameters": {
+        "jsCode": "// =====================\n// RÉCUPÉRATION DES DONNÉES\n// =====================\nconst infos = $('INFOS').first().json;\nconst perf = $('2022-2025').all();\nconst top15All = $('Top 15 vidéos').all();\nconst top15Totaux = top15All[0].json;\n\n// =====================\n// NETTOYAGE\n// =====================\nfunction cleanDate(d) {\n  if (!d) return 'N/A';\n  if (d.includes('T')) {\n    return new Date(d).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });\n  }\n  return d;\n}\n\nfunction cleanStr(s) {\n  if (!s) return 'N/A';\n  return String(s).replace(/\\n/g, ' ').trim();\n}\n\nfunction calcPoids(top15Vues, totalVues) {\n  const pct = (top15Vues / totalVues * 100).toFixed(2);\n  return `(${top15Vues} / ${totalVues} × 100 = ${pct}%)`;\n}\n\n// =====================\n// 1.0 IDENTIFICATION\n// =====================\nconst bloc10 = `## 1.0. Identification\nNom de la chaîne : ${cleanStr(infos['Nom de la chaîne'])}\nCluster : ${cleanStr(infos['Cluster'])}\nAutorité LOG : ${cleanStr(infos['Autorité LOG'])}\nPays : ${cleanStr(infos['Pays'])}\nType de vélo : ${cleanStr(infos['Type de vélo'])}\nFormat : ${cleanStr(infos['Format'])}\nSujet : ${cleanStr(infos['Sujet'])}\nDate de création : ${cleanDate(infos['Date de création'])}\nVol. abonnés : ${cleanStr(infos['Vol. abonnés'])}\nVues totales : ${cleanStr(infos['Vues totales'])}\nVol. vidéos : ${cleanStr(infos['Vol. vidéos'])}`;\n\n// =====================\n// 1.1 VOLUME & ACTIVITÉ\n// =====================\nconst years = ['2022-2025', '2025', '2024', '2023', '2022'];\nconst agregats = perf.slice(0, 5).map(r => r.json);\n\nconst rows11 = agregats.map((r, i) => \n  `| ${years[i]} | ${r['Vol. vidéos annuel']} | ${r['Vues/video (moyenne annuelle)']} | ${r['Vues']} |`\n).join('\\n');\n\nconst bloc11 = `## 1.1. Volume & activité\n| Année | Vol. vidéos | Vues/vidéo moyenne | Vues totales |\n|:---|:---:|:---:|:---:|\n${rows11}`;\n\n// =====================\n// 1.2 FORMATS & DURÉE\n// =====================\nconst rows12 = agregats.map((r, i) =>\n  `| ${years[i]} | ${r['Short ?']} | ${r['Durée']} |`\n).join('\\n');\n\nconst bloc12 = `## 1.2. Formats & durée\n| Année | % Shorts | Durée moyenne |\n|:---|:---:|:---:|\n${rows12}`;\n\n// =====================\n// 1.3 ENGAGEMENT\n// =====================\nconst rows13 = agregats.map((r, i) =>\n  `| ${years[i]} | ${r['% likes/vues']} | ${r['% Engagement total']} | ${r['Vivacité (%commentaires/likes)']} |`\n).join('\\n');\n\nconst bloc13 = `## 1.3. Engagement\n| Année | % likes/vues | % Engagement total | Vivacité |\n|:---|:---:|:---:|:---:|\n${rows13}`;\n\n// =====================\n// DONNÉES POUR GPT (1.4 + 1.5)\n// =====================\nconst poidsCalc = calcPoids(top15Totaux['Vues'], infos['Vues totales']);\n\nconst top15Titres = top15All.slice(1, 16).map(row => {\n  const r = row.json;\n  return `- \"${r['Titre']}\" | ${r['Mois']} | Vues: ${r['Vues']} | Likes: ${r['Likes']} | Short: ${r['Short ?']}`;\n}).join('\\n');\n\nconst dataForGPT = `=== DONNÉES POUR 1.4 ET 1.5 ===\n\nPoids du Top 15 : ${poidsCalc} des vues totales de la chaîne.\n\nTop 15 titres :\n${top15Titres}\n\nAgrégats synthèse :\n${agregats.map((r, i) => `${years[i]} : ${r['Vol. vidéos annuel']} vidéos | ${r['Vues/video (moyenne annuelle)']} vues/vidéo | ${r['Short ?']} Shorts | Durée: ${r['Durée']} | Engagement: ${r['% Engagement total']}% | Vivacité: ${r['Vivacité (%commentaires/likes)']}%`).join('\\n')}`;\n\n// =====================\n// OUTPUT\n// =====================\nreturn [{ json: {\n  blocs_code: `# P1. ID & PERFORMANCES\\n\\n${bloc10}\\n\\n${bloc11}\\n\\n${bloc12}\\n\\n${bloc13}`,\n  data_for_gpt: dataForGPT,\n  chaine: cleanStr(infos['Nom de la chaîne']),\n  vues_totales: infos['Vues totales']\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        -320
+      ],
+      "id": "f9ea80eb-1964-4637-bf3f-0462c74c9b9b",
+      "name": "P1_DATA"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4-NANO"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Tu es un analyste YouTube spécialisé vélo.\nTu rédiges uniquement ce qui t'est demandé.\nTu ne produis rien d'autre que les sections demandées.\nTu n'inventes rien. Chaque citation doit être extraite\nmot pour mot des données fournies.\nSi une vidéo est un Short avec transcription absente\nou insuffisante, ignore-la.\nN'identifie pas le créateur par son nom sauf s'il est\nexplicitement mentionné dans les données.\nAucun émoji. Aucune introduction. Aucune conclusion.\nCommence directement par \"# 2B. LIGNE ÉDITORIALE\"."
+            },
+            {
+              "content": "={{ $json.p2b_data }}\n\n# 2B. LIGNE ÉDITORIALE\n\n## 2B.1. Qui — Incarnation & ton\n- Présence humaine : [Systématique / Partielle / Absente]\n  Basé sur la colonne \"Humain\" de AnalyseGPT.\n- Profil perceptible : [Description factuelle de ce qu'on\n  observe à l'écran : tenue, environnement, posture.\n  Sans projection d'intentions. Basé sur Contexte\n  et Capture 25/50/75 de AnalyseGPT.]\n- Extraits de style : [3 extraits de 1 à 2 phrases\n  mot pour mot issus de 3 transcriptions différentes.\n  Objectif : identifier des récurrences dans la manière\n  de s'adresser à l'audience.\n  Format :\n  \"[extrait mot pour mot]\" — Video ID :\n  \"[extrait mot pour mot]\" — Video ID :\n  \"[extrait mot pour mot]\" — Video ID :]\n\n## 2B.2. Quoi — Expertise & légitimité\n- Niveau de langage : [Accessible / Technique / Expert]\n- Extraits techniques : [5 termes ou expressions techniques\n  de 3 à 6 mots maximum, extraits mot pour mot\n  des transcriptions, provenant d'au moins 3 Video ID\n  différents. Chaque extrait doit être un nom d'outil,\n  une pièce, un procédé ou une référence technique\n  spécifique au contenu de cette chaîne.\n  Format :\n  1. \"[terme exact]\" — Video ID :\n  2. \"[terme exact]\" — Video ID :\n  3. \"[terme exact]\" — Video ID :\n  4. \"[terme exact]\" — Video ID :\n  5. \"[terme exact]\" — Video ID :]\n- Profondeur du contenu : [Superficiel / Informatif / Expert]\n  Illustre avec 1 exemple concret de résolution de problème\n  ou d'explication technique tiré des transcriptions.\n\n## 2B.3. Comment — Production & matériel\n- Niveau de production global : [Amateur / Semi-pro / Professionnel]\n  Basé sur la colonne \"Qualité prod.\" de AnalyseGPT.\n- Matériel de tournage : [Relève tout modèle ou marque\n  de caméra ou matériel explicitement mentionné par\n  le créateur dans les transcriptions ou descriptions YT.\n  Si plusieurs modèles, liste-les tous avec leur Video ID.\n  Sinon \"N/A\".]\n- Environnement de tournage : [Description factuelle\n  du cadre visuel récurrent identifié dans les captures\n  AnalyseGPT. 2 lignes max.]\n\n## 2B.4. Légitimité territoriale\n[Analyse la cohérence entre le positionnement annoncé\net la réalité du contenu produit, en t'appuyant sur\nles descriptions YT et les transcriptions disponibles.\nIgnore les Shorts avec transcription absente.\nListe tous les titres hors territoire avec leur Video ID.\nSi aucun, \"N/A\".]\n\n## 2B.5. Synthèse ligne éditoriale\n[10 lignes max. Qui est ce créateur, comment produit-il,\nquelle expertise réelle apporte-t-il, son exécution\nest-elle cohérente avec son territoire annoncé ?\nLe pattern de style identifié en 2B.1 doit être\ncommenté ici. Aucune projection d'intentions.\nAucun superlatif non vérifiable. Aucun émoji.\nRédige en paragraphe dense, pas de liste à puces.]"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 1500
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1328,
+        208
+      ],
+      "id": "14ad9f7f-377c-4dc1-ad76-76bd534510cb",
+      "name": "Message a model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "MC_OPEN_AI_KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1744,
+        48
+      ],
+      "id": "c0498fab-a57c-4555-ad89-c0e42cc3a712",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// =====================\n// RÉCUPÉRATION\n// =====================\nconst inputs = $input.all();\nconst top300Raw = $('Top 300 commentaires').all();\nconst infos = $('INFOS').first().json;\n\n// =====================\n// TRI PAR LIKES DÉCROISSANTS\n// =====================\nconst top300 = [...top300Raw].sort((a, b) =>\n  (Number(b.json['Likes']) || 0) - (Number(a.json['Likes']) || 0)\n);\n\n// =====================\n// NETTOYAGE\n// =====================\nfunction decodeHTML(s) {\n  if (!s) return '';\n  return String(s)\n    .replace(/&amp;/g, '&')\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/&quot;/g, '\"')\n    .replace(/&#39;/g, \"'\")\n    .replace(/&nbsp;/g, ' ')\n    .replace(/&#\\d+;/g, c => String.fromCharCode(parseInt(c.slice(2, -1))))\n    .replace(/<br\\s*\\/?>/gi, ' ')\n    .replace(/\\n/g, ' ')\n    .trim();\n}\n\n// =====================\n// CHAÎNE\n// =====================\nconst chaine = infos['Nom de la chaîne'] || 'N/A';\nconst chaineID = infos['ID'] || '';\n\nconst blocHeader = `=== CHAÎNE ANALYSÉE ===\nNom : ${chaine}\nHandle YouTube : @${chaineID}\nATTENTION : Tout commentaire dont l'auteur correspond\nà \"${chaine}\" ou \"@${chaineID}\" doit être ignoré —\nc'est le créateur qui répond dans ses propres vidéos.\n\n`;\n\n// =====================\n// TOP 3 PAR LIKES\n// =====================\nconst top3 = top300.slice(0, 3).map((row, i) => {\n  const r = row.json;\n  return `${i + 1}. \"${decodeHTML(r['TXT'])}\" — Auteur: ${r['Auteur']} — Likes: ${r['Likes']}`;\n}).join('\\n');\n\nconst blocTop3 = `=== TOP 3 COMMENTAIRES PAR LIKES ===\n${top3}`;\n\n// =====================\n// 300 COMMENTAIRES FORMATÉS\n// =====================\nconst formatted = top300.map(row => {\n  const r = row.json;\n  return `TXT: ${decodeHTML(r['TXT'])} | Auteur: ${r['Auteur']} | Likes: ${r['Likes']} | Video ID: ${r['Video ID']}`;\n}).join('\\n');\n\nconst blocComments = `=== 300 COMMENTAIRES (triés par likes décroissants) ===\n${formatted}`;\n\n// =====================\n// OUTPUT\n// =====================\nreturn [{ json: {\n  p3_data: `${blocHeader}${blocTop3}\\n\\n${blocComments}`,\n  YT_CHAINE: chaine\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        496
+      ],
+      "id": "3e2871d9-c7eb-4ac4-b747-a5043fe5fc60",
+      "name": "P3_DATA"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        880,
+        496
+      ],
+      "id": "a53571bd-9d45-46c4-87b7-8e865bec1e17",
+      "name": "P3"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "=Tu es un analyste YouTube spécialisé vélo.\nTu rédiges uniquement ce qui t'est demandé.\nTu ne produis rien d'autre que les sections demandées.\nTu n'inventes rien. Chaque citation doit être extraite\nmot pour mot de la colonne TXT des données fournies.\nPour chaque citation, indique l'auteur et les likes\nexacts tels qu'ils apparaissent dans les données.\nAucune inférence démographique.\nAucun émoji. Aucune introduction. Aucune conclusion.\nCommence directement par \"# 3. AUDIENCE\"."
+            },
+            {
+              "content": "={{ $json.p3_data }}\n\n# 3. AUDIENCE\n\n## 3.1. Profil de l'audience\n[Analyse du niveau de pratique apparent, de la relation\nau vélo (passion, héritage familial, usage quotidien)\net du niveau de langage utilisé dans les commentaires.\nPas d'inférence démographique. Paragraphe dense.]\n\n## 3.2. Sensibilité à la proposition\n- Sentiment dominant : [positif dominant / neutre / négatif]\n  Basé sur la lecture de l'ensemble des 300 commentaires.\n  Pas de pourcentage.\n- 3 preuves : [3 citations extraites mot pour mot\n  de la colonne TXT illustrant ce sentiment dominant.\n  Format :\n  \"[colonne TXT]\" — Auteur : — Likes :\n  \"[colonne TXT]\" — Auteur : — Likes :\n  \"[colonne TXT]\" — Auteur : — Likes :]\n- Top 3 commentaires par likes : [Recopie mot pour mot\n  UNIQUEMENT les 3 entrées de la section\n  \"TOP 3 COMMENTAIRES PAR LIKES\" fournie dans les données.\n  Ne sélectionne aucun autre commentaire.\n  Format :\n  \"[colonne TXT]\" — Auteur : — Likes :\n  \"[colonne TXT]\" — Auteur : — Likes :\n  \"[colonne TXT]\" — Auteur : — Likes :]\n\n## 3.3. Bénéfices & Retours\n3 thèmes les plus commentés :\n1.\n2.\n3.\n\nUtilité exprimée :\n1. \"[colonne TXT mot pour mot]\"\n   — Auteur : — Likes :\n2. \"[colonne TXT mot pour mot]\"\n   — Auteur : — Likes :\n\nQuestions récurrentes : [Demandes explicites d'information\nou questions contenant un point d'interrogation,\nposées dans au moins 2 commentaires distincts.\nExclure tout commentaire dont l'auteur correspond\nau nom ou handle de la chaîne indiqué dans\nla section \"CHAÎNE ANALYSÉE\" des données.\nCite 2 formulations exactes avec leur auteur.\nFormat :\n\"[colonne TXT mot pour mot]\" — colonne Auteur :\n\"[colonne TXT mot pour mot]\" — colonne Auteur :\nSinon \"N/A\".]\n\nFrustrations exprimées : [Insatisfactions mentionnées\nexplicitement.\nFormat :\n\"[colonne TXT mot pour mot]\" — Auteur :\nSinon \"N/A\".]\n\nMarques/produits mentionnés : [Uniquement les marques\nou produits directement liés au vélo, à la mécanique,\nà l'outillage ou à l'entretien, cités explicitement\npar au moins 2 auteurs différents. Exclure les marques\ncitées par humour ou hors contexte vélo.\nExclure le nom de la chaîne analysée.\nFormat par marque :\nNomMarque — @auteur1 ; @auteur2\nUn \"N/A\" n'est autorisé qu'après lecture complète\ndes 300 lignes.]\n\nSujets demandés absents : [Demandes explicites de contenu\nque la chaîne ne produit pas encore.\nFormat :\n\"[colonne TXT mot pour mot]\" — Auteur :\nSinon \"N/A\".]\n\n## 3.4. Aperçu des échanges entre membres\n[Lecture qualitative des 300 commentaires. Relève jusqu'à\n3 exemples où un membre — pas le créateur — apporte\nune information technique, une correction ou un complément\nutile aux autres. Exclure tout commentaire qui semble provenir\ndu créateur de la chaîne. Exclure également\nles simples remerciements sans apport technique\n(ex : \"Merci pour la clarté\", \"Super vidéo\").\nUn échange membre doit contenir une information\nconcrète, un chiffre, une astuce ou une correction.].\nLes exemples doivent provenir\nexclusivement de la colonne TXT.\nFormat :\n\"[colonne TXT mot pour mot]\" — Video ID :\nSi aucun échange détecté, indique \"N/A\".]\n- Conclusion : [Audience passive ou communauté active ?\n  Justifie par les exemples détectés, pas par un chiffre.]\n\n## 3.5. Synthèse audience\n[5 lignes max. Qui sont ces gens, pourquoi regardent-ils\ncette chaîne, quel niveau de communauté existe-t-il ?\nÉvalue l'adéquation créateur/audience. Aucune spéculation.\nRédige en paragraphe dense, pas de liste à puces.\nAucun émoji.]"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 2500,
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1328,
+        496
+      ],
+      "id": "75581003-837d-4191-abad-c48f7eedd926",
+      "name": "Message a model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "MC_OPEN_AI_KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst gptText = input.output[0].content[0].text;\nconst top300 = $('Top 300 commentaires').all();\n\n// Récupérer le nom de la chaîne depuis INFOS\nconst chaine = $('INFOS').first().json['Nom de la chaîne'] || 'N/A';\n\n// Extraire la section marques\nconst marquesSection = gptText.match(/Marques\\/produits mentionnés\\s*:\\s*([\\s\\S]*?)(?=\\n\\n##)/);\nconst marquesRaw = marquesSection ? marquesSection[1] : '';\n\n// Parser chaque ligne \"Marque — @auteur1 ; @auteur2\"\nconst lignes = marquesRaw.split('\\n').filter(l => l.trim() && l.includes('—'));\n\nconst marquesVerifiees = [];\nlignes.forEach(ligne => {\n  const parts = ligne.split('—');\n  if (parts.length < 2) return;\n  const marque = parts[0].trim();\n  const auteursReels = new Set(\n    top300\n      .filter(r => r.json['TXT'] &&\n        r.json['TXT'].toLowerCase().includes(marque.toLowerCase()))\n      .map(r => r.json['Auteur'])\n  );\n  if (auteursReels.size >= 2) {\n    marquesVerifiees.push(`${marque} (${auteursReels.size} auteurs)`);\n  }\n});\n\nconst marquesFinales = marquesVerifiees.length > 0\n  ? marquesVerifiees.join(', ')\n  : 'N/A';\n\nconst p3Final = gptText.replace(\n  /Marques\\/produits mentionnés\\s*:[\\s\\S]*?(?=\\n\\n##)/,\n  `Marques/produits mentionnés : ${marquesFinales}\\n\\n`\n);\n\nreturn [{ json: {\n  P3_Result: p3Final,\n  YTchaine: chaine\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1744,
+        496
+      ],
+      "id": "1a5fb521-7308-406f-a49b-21135221cfdb",
+      "name": "P3_Result"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputs = $input.all();\n\n// Trouver les bons items par leur contenu\nconst p2aItem = inputs.find(i => i.json.output?.[0]?.content?.[0]?.text?.includes('2A. SUJETS'));\nconst p2bItem = inputs.find(i => i.json.output?.[0]?.content?.[0]?.text?.includes('2B. LIGNE'));\nconst chaineItem = inputs.find(i => i.json.chaine);\n\nconst p2aText = p2aItem.json.output[0].content[0].text;\nconst p2bText = p2bItem.json.output[0].content[0].text;\nconst chaine = chaineItem.json.chaine;\n\nconst p2Final = `${p2aText}\\n\\n---\\n\\n${p2bText}`;\n\nreturn [{ json: {\n  P2_Result: p2Final,\n  YTchaine: chaine\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        64
+      ],
+      "id": "41f78999-e95a-4949-a8a9-2fd64cb04ab4",
+      "name": "P2_Result"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst gptText = input.output[0].content[0].text;\n\n// Lire blocs_code depuis le nœud Edit Fields\nconst blocsCode = $('Edit Fields1').first().json.blocs_code;\nconst YTchaine = $('Edit Fields1').first().json.chaine;\n\nconst p1result= `${blocsCode}\\n\\n${gptText}`;\n\nreturn [{ json: {\n  P1_Result: p1result,\n  YTchaine: YTchaine\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        -320
+      ],
+      "id": "1eaa252d-d9de-4e3a-862c-798ce620dfb9",
+      "name": "P1_Result"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2256,
+        48
+      ],
+      "id": "a52fe854-da0e-43b6-bb8a-72d09abfbc6a",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const p1 = $('P1_Result').first().json.P1_Result;\nconst p2 = $('P2_Result').first().json.P2_Result;\nconst p3 = $('P3_Result').first().json.P3_Result;\nconst chaine = $('P1_Result').first().json.YTchaine;\n\nconst fullResult = `${p1}\\n\\n---\\n\\n${p2}\\n\\n---\\n\\n${p3}`;\n\nreturn [{ json: {\n  full_result: fullResult,\n  YTchaine: chaine\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        64
+      ],
+      "id": "6f3a0afc-0989-4dc0-bed8-a9e654757a49",
+      "name": "FUSION"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst content = input.full_result;\nconst chaine = input.YTchaine.replace(/\\s+/g, '_');\n\nconst today = new Date();\nconst date = String(today.getDate()).padStart(2, '0')\n  + String(today.getMonth() + 1).padStart(2, '0')\n  + today.getFullYear();\n\nconst filename = `Folk_${chaine}_PDATA_${date}.md`;\n\nconst binaryData = Buffer.from(content, 'utf-8').toString('base64');\n\nreturn [{\n  json: { filename },\n  binary: {\n    file: {\n      data: binaryData,\n      mimeType: 'text/markdown',\n      fileName: filename,\n      fileExtension: 'md'\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2704,
+        64
+      ],
+      "id": "26dae253-a27f-4adc-92e2-3d0304ca3cbd",
+      "name": "Convert to .md"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=file",
+        "name": "={{ $json.filename }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1A7mRivAwD8jBvjb8tasjZ7vOs2z97M80",
+          "mode": "list",
+          "cachedResultName": "Prompts_Piepline",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/VOTRE_SHEET_ID/edit"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2928,
+        64
+      ],
+      "id": "75fc4377-26ae-44e2-83fb-9e82dc79374a",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "VOTRE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "NOM_DE_VOTRE_REGISTRE",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/VOTRE_SHEET_ID/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "PIPELINE_LIST",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/VOTRE_SHEET_ID/edit"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "SHEET_ID": "={{ $('Get row(s) in sheet1').item.json.SHEET_ID }}",
+            "Prompts_done": "TRUE"
+          },
+          "matchingColumns": [
+            "SHEET_ID"
+          ],
+          "schema": [
+            {
+              "id": "CLUSTER",
+              "displayName": "CLUSTER",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Channel_ID",
+              "displayName": "Channel_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "NOM",
+              "displayName": "NOM",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SHEET_ID",
+              "displayName": "SHEET_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DRIVE_FOLDER_ID",
+              "displayName": "DRIVE_FOLDER_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "S1_done",
+              "displayName": "S1_done",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "S2_done",
+              "displayName": "S2_done",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "S3_done",
+              "displayName": "S3_done",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "S4_done",
+              "displayName": "S4_done",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "S5_done",
+              "displayName": "S5_done",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EXPORT",
+              "displayName": "EXPORT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Prompts_done",
+              "displayName": "Prompts_done",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3152,
+        64
+      ],
+      "id": "47d32cf1-109c-45c1-a985-680841352751",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "VOTRE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3376,
+        592
+      ],
+      "id": "36a89a3d-ecb4-4cf3-acdb-368a056895b1",
+      "name": "Wait",
+      "webhookId": "470444d5-0fe5-41ad-bc44-9086377d5bd7"
+    },
+    {
+      "parameters": {
+        "jsCode": "// =====================\n// RÉCUPÉRATION DES DONNÉES\n// =====================\nconst gptAll = $('Analyse_GPT5.1').all();\nconst transAll = $('Transcription').all();\nconst perfAll = $('2022-2025').all();\nconst videos = perfAll.slice(5);\n\n// =====================\n// NETTOYAGE\n// =====================\nconst mapping = {\n  '茅': 'é', '脿': 'à', '猫': 'è', '么': 'ô',\n  '卯': 'î', '莽': 'ç', '锚': 'ê', '毛': 'ë',\n  '眉': 'ü', '脡': 'É', '脠': 'È', '脢': 'Ê',\n  '脝': 'Æ', '脟': 'Ç'\n};\n\nfunction cleanStr(s) {\n  if (!s) return 'N/A';\n  let str = String(s)\n    .replace(/&amp;/g, '&')\n    .replace(/&#39;/g, \"'\")\n    .replace(/&quot;/g, '\"')\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/\\n/g, ' ')\n    .trim();\n  for (const [bad, good] of Object.entries(mapping)) {\n    str = str.split(bad).join(good);\n  }\n  return str;\n}\n\n// =====================\n// ANALYSEGPT — captures + contexte + qualité\n// =====================\nconst gptBlocs = gptAll.map(row => {\n  const r = row.json;\n  return `Video ID : ${cleanStr(r['Video ID'])}\nFormat : ${cleanStr(r['Format'])}\nHumain : ${cleanStr(r['Humain'])}\nQualité prod. : ${cleanStr(r['Qualité prod.'])}\nContexte : ${cleanStr(r['Contexte'])}\nCapture 25 : ${cleanStr(r['Capture 25'])}\nCapture 50 : ${cleanStr(r['Capture 50'])}\nCapture 75 : ${cleanStr(r['Capture 75'])}`;\n}).join('\\n\\n---\\n\\n');\n\nconst blocGPT = `=== ANALYSEGPT (15 vidéos) ===\n${gptBlocs}`;\n\n// =====================\n// TRANSCRIPTIONS\n// =====================\nconst transBlocs = transAll.map(row => {\n  const r = row.json;\n  return `Video ID : ${cleanStr(r['Video ID'])}\nTranscription : ${cleanStr(r['transcription'])}`;\n}).join('\\n\\n---\\n\\n');\n\nconst blocTrans = `=== TRANSCRIPTIONS (15 vidéos) ===\n${transBlocs}`;\n\n// =====================\n// DESCRIPTIONS YT (lignes 7+)\n// =====================\nconst descBlocs = videos\n  .filter(row => row.json['Description YT'] && row.json['Description YT'] !== 'x')\n  .slice(0, 30) // limite à 30 pour ne pas surcharger\n  .map(row => {\n    const r = row.json;\n    return `- \"${cleanStr(r['Titre'])}\" (${cleanStr(r['Date'])}) : ${cleanStr(r['Description YT'])}`;\n  }).join('\\n');\n\nconst blocDesc = `=== DESCRIPTIONS YT (extrait catalogue) ===\n${descBlocs}`;\n\n// =====================\n// OUTPUT\n// =====================\nconst chaine = cleanStr(perfAll[0].json['Nom de la chaîne']);\n\nreturn [{ json: {\n  p2b_data: `${blocGPT}\\n\\n${blocTrans}\\n\\n${blocDesc}`,\n  chaine: chaine\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        144
+      ],
+      "id": "408bc391-4b31-47e6-94bf-6c9e7b854d0f",
+      "name": "P2B_DATA"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "INFOS",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2022-2025",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Top 15 vidéos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Top 300 commentaires",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Transcription",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyse_GPT5.1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Top 300 commentaires": {
+      "main": [
+        [
+          {
+            "node": "P3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "INFOS": {
+      "main": [
+        [
+          {
+            "node": "P1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "P2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "P3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2022-2025": {
+      "main": [
+        [
+          {
+            "node": "P1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "P2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Top 15 vidéos": {
+      "main": [
+        [
+          {
+            "node": "P1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "P1_Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyse_GPT5.1": {
+      "main": [
+        [
+          {
+            "node": "P2",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Transcription": {
+      "main": [
+        [
+          {
+            "node": "P2",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "P2": {
+      "main": [
+        [
+          {
+            "node": "P2A_DATA",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "P2B_DATA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P1": {
+      "main": [
+        [
+          {
+            "node": "P1_DATA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P2A_DATA": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P1_DATA": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "P2_Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P3": {
+      "main": [
+        [
+          {
+            "node": "P3_DATA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P3_DATA": {
+      "main": [
+        [
+          {
+            "node": "Message a model3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model3": {
+      "main": [
+        [
+          {
+            "node": "P3_Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P2_Result": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "P1_Result": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P3_Result": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "FUSION",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FUSION": {
+      "main": [
+        [
+          {
+            "node": "Convert to .md",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to .md": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P2B_DATA": {
+      "main": [
+        [
+          {
+            "node": "Message a model2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "VOTRE_VERSION_ID",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "VOTRE_INSTANCE_ID"
+  },
+  "id": "VOTRE_WORKFLOW_ID",
+  "tags": []
+}
