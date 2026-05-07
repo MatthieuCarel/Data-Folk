@@ -1,4 +1,8 @@
-﻿### **P5B1 Segments d’audience**
+DISCLAIMER : Résultats produits par Claude Opus 4.7 à partir des données "PDATA" et de l'exécution sumultanée des 3 prompts suivants : "#P5B1_Segments d'audience", "P5B2_Besoins & tendances", et "P5B3_Synthèses & insights". ClaudeIA est une IA et peut faire des erreurs !
+
+Note : Les auteurs des commentaires ont été anonymisés ("@x") 
+
+ ### **P5B1 Segments d’audience**
 
 **Profil 1 — Le mécano-bricoleur en quête d'autonomie :**
 
